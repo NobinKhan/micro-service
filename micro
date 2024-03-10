@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -eux
+
+# command: compile ***
+if [ "$1" = "compile" ]; then
+
+  # command: compile proto ***
+  if [ "$2" = "proto" ]; then
+    echo "Compiling proto for $3"
+    podman build . -t proto-compiler:latest -f docker/compile_proto.Dockerfile
+    podman run -d --rm --name proto-compiler -it proto-compiler:latest /bin/sh
+    podman cp proto-compiler:/home/nonroot/output ./services/auth/protos
+    podman kill proto-compiler
+
+  else
+    echo "command $2 not found."
+    # Add commands specific to the non-container case here
+  fi
+
+else
+  echo "command $1 not found."
+  # Add commands specific to the non-container case here
+fi
