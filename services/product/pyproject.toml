@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "auth"
+name = "product"
 version = "0.1.0"
 description = ""
 package-mode = false
